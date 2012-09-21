@@ -6,14 +6,17 @@
 <meta title="hello">
 </head>
 <body onkeydown="getCommand()">
-<canvas id="tankMap" width="600px" height="400px"></canvas>
+<canvas id="tankMap" width="620px" height="420px"></canvas>
 <script type="text/javascript" src="tank.js"></script>
 <script type="text/javascript">
-    
+
+<?php if(!isset($_GET["grid"])) {$num_of_grids=500;} else {$num_of_grids=$_GET["grid"];}?>
+    var num_of_grids= <?php echo $num_of_grids;?>;
     var heroX=0;
 	var heroY=0;
 	var canvas1=document.getElementById("tankMap");
 	var cxt=canvas1.getContext("2d");
+	
 	
 	var hero=new Hero(0,0,1,20);
 	var memory= new Array(canvas1.width/20);
@@ -25,8 +28,8 @@
 	}
 	
 	//generate 10 walls
-	var walls= new Array(10);
-	for(var j=0; j<10; j++){
+	var walls= new Array(num_of_grids);
+	for(var j=0; j<num_of_grids; j++){
 	   walls[j]= new Array(4);
 	   generateRandomWalls(j);
 	}

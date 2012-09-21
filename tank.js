@@ -41,14 +41,28 @@ function drawLines(){
 }
 
 function generateRandomWalls(index){
-	walls[index][0]=20*(Math.floor(Math.random()*14)+1);
-	walls[index][1]=20*(Math.floor(Math.random()*4)+1);
-	walls[index][2]= 20*Math.floor(Math.random()*(canvas1.width/40));
-	walls[index][3]= 20*Math.floor(Math.random()*(canvas1.height/40));
+	var inside= 0;
+	var box1=0;
+	var box2=0;
+	var box3=0;
+	var box4=0;
+	inside=0;
+	while(inside==0){	
+	walls[index][0]=20*(2);
+	walls[index][1]=20*(2);
+	walls[index][2]= 20*Math.floor(Math.random()*30);
+	walls[index][3]= 20*Math.floor(Math.random()*20);
+	if(walls[index][2]>=1*20 && walls[index][2]<=13*20 && walls[index][3]>=1*20 && walls[index][3]<=8*20) box1=1;
+	else if(walls[index][2]>=16*20 && walls[index][2]<=28*20 && walls[index][3]>=1*20 && walls[index][3]<=8*20) box2=1;
+	else if(walls[index][2]>=1*20 && walls[index][2]<=13*20 && walls[index][3]>=11*20 && walls[index][3]<=18*20) box3=1;
+	else if(walls[index][2]>=16*20 && walls[index][2]<=28*20 && walls[index][3]>=11*20 && walls[index][3]<=18*20) box4=1;
+	if(box1==1||box2==1||box3==1||box4==1) {inside=1;}
+	}		
 }
 
+
 function drawWalls(){
-	for(var j=0; j<10; j++){
+	for(var j=0; j<num_of_grids; j++){
 	   	drawOneWall(walls[j][2],walls[j][3],walls[j][0],walls[j][1]);
 	}
 }
