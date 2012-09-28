@@ -85,6 +85,8 @@
 	}
 		
 </script>
+
+<p>To change wall color, please press 0,1,..7.</p>
 </body>
 </html>
 
