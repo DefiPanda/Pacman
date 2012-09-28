@@ -8,16 +8,15 @@
 <body onkeydown="getCommand()">
 <canvas id="tankMap" width="620px" height="420px"></canvas>
 <script type="text/javascript" src="tank.js"></script>
+<script type="text/javascript" src="jquery-1.3.2-vsdoc2.js"></script>
 <script type="text/javascript">
-
-<?php if(!isset($_GET["grid"])) {$num_of_grids=500;} else {$num_of_grids=$_GET["grid"];}?>
-    var num_of_grids= <?php echo $num_of_grids;?>;
     var heroX=0;
 	var heroY=0;
+	//0: red; 1:blue; 2: green; 3:yellow
+	var color=0;
 	var canvas1=document.getElementById("tankMap");
 	var cxt=canvas1.getContext("2d");
-	
-	
+    
 	var hero=new Hero(0,0,1,20);
 	var memory= new Array(canvas1.width/20);
 	for(var j=0; j<canvas1.width/20; j++){
@@ -26,14 +25,14 @@
 	 	memory[j][k]=0;
 	 }
 	}
-	
-	//generate 10 walls
-	var walls= new Array(num_of_grids);
-	for(var j=0; j<num_of_grids; j++){
-	   walls[j]= new Array(4);
-	   generateRandomWalls(j);
+		
+	$('#tankMap').bind('click', function() {
+		 var offset = $('#tankMap').offset();
+		 var mouseX = event.pageX-offset.left;
+         var mouseY = event.pageY-offset.top;
+	   drawOneWall(20*Math.floor(mouseX/20),20*Math.floor(mouseY/20),20,20);
 	}
-	
+);
 	
 	drawTank(hero);
 	
@@ -57,9 +56,34 @@
 		  if(hero.x+10>hero.speed&&((memory[(hero.x/20)-1][hero.y/20])==0)){
 		  hero.moveLeft();}
 		  break;
+		 case 48:
+		  color=0;
+		  break;
+		 case 49:
+		  color=1;
+		  break;
+		 case 50:
+		  color=2;
+		  break;
+		 case 51:
+		  color=3;
+		  break;
+		 case 52:
+		  color=4;
+		  break;
+		 case 53:
+		  color=5;
+		  break;
+		 case 54:
+		  color=6;
+		  break;
+		 case 55:
+		  color=7;
+		  break;
 		  }
 		 drawTank(hero);
 	}
+		
 </script>
 </body>
 </html>

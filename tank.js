@@ -31,7 +31,7 @@ function drawLines(){
 	cxt.strokeStyle="red";
 	cxt.stroke();
 	}
-	for(var i=1; i<= canvas1.width/20; i++){
+	for(i=1; i<= canvas1.width/20; i++){
 	cxt.moveTo(20*i,0);
 	cxt.lineTo(20*i,canvas1.height);
 	cxt.strokeStyle="red";
@@ -40,35 +40,33 @@ function drawLines(){
 	cxt.endPath();
 }
 
-function generateRandomWalls(index){
-	var inside= 0;
-	var box1=0;
-	var box2=0;
-	var box3=0;
-	var box4=0;
-	inside=0;
-	while(inside==0){	
-	walls[index][0]=20*(2);
-	walls[index][1]=20*(2);
-	walls[index][2]= 20*Math.floor(Math.random()*30);
-	walls[index][3]= 20*Math.floor(Math.random()*20);
-	if(walls[index][2]>=1*20 && walls[index][2]<=13*20 && walls[index][3]>=1*20 && walls[index][3]<=8*20) box1=1;
-	else if(walls[index][2]>=16*20 && walls[index][2]<=28*20 && walls[index][3]>=1*20 && walls[index][3]<=8*20) box2=1;
-	else if(walls[index][2]>=1*20 && walls[index][2]<=13*20 && walls[index][3]>=11*20 && walls[index][3]<=18*20) box3=1;
-	else if(walls[index][2]>=16*20 && walls[index][2]<=28*20 && walls[index][3]>=11*20 && walls[index][3]<=18*20) box4=1;
-	if(box1==1||box2==1||box3==1||box4==1) {inside=1;}
-	}		
-}
-
 
 function drawWalls(){
-	for(var j=0; j<num_of_grids; j++){
-	   	drawOneWall(walls[j][2],walls[j][3],walls[j][0],walls[j][1]);
+	for(var j=0; j<canvas1.width/20; j++){
+		for(var k=0; k<canvas1.height/20; k++){
+		if(memory[j][k]>0){
+	   	drawOneWall(j*20,k*20,20,20);}
+	}
 	}
 }
 
 function drawOneWall(x,y,width,height){
+	if(color==0)
 	cxt.fillStyle="red";
+	else if(color==1)
+	cxt.fillStyle="blue";
+	else if(color==2)
+	cxt.fillStyle="green";
+	else if(color==3)
+	cxt.fillStyle="yellow";
+	else if(color==4)
+	cxt.fillStyle="#00FFFF";
+	else if(color==5)
+	cxt.fillStyle="#FF00FF";
+	else if(color==6)
+	cxt.fillStyle="#C0C0C0";
+	else if(color==7)
+	cxt.fillStyle="#FFFFFF";
 	cxt.fillRect(x,y,width,height);
 	var start_x= x/20;
 	var start_y= y/20;
