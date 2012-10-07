@@ -124,3 +124,119 @@ function drawTank(tank) {
 	drawWalls();
 	drawLines();
 }
+
+function Ghost(x, y, direct, speed) {
+	this.speed = speed;
+	this.x = x;
+	this.y = y;
+	this.direct = direct;
+}
+
+function drawGhost(tank, tank2) {
+	cxt.clearRect(0,0,canvas1.width,canvas1.height);
+	switch(tank.direct) {
+		case 0:
+		    cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, true);
+			cxt.fillStyle = "blue";
+			cxt.fill();
+			cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 1.25 * 3.14, 2.25 * 3.14, true);
+			cxt.fill();
+			cxt.beginPath();
+			break;
+		case 2:
+		    cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, false);
+			cxt.fillStyle = "blue";
+			cxt.fill();
+			cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 1.25 * 3.14, 2.25 * 3.14, false);
+			cxt.fill();
+			cxt.beginPath();
+			break;
+		case 1:
+		    cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 0.25 * 3.14, 1.25 * 3.14, false);
+			cxt.fillStyle = "blue";
+			cxt.fill();
+			cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, false);
+			cxt.fill();
+			cxt.beginPath();
+			break;
+		case 3:
+			cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 0.25 * 3.14, 1.25 * 3.14, true);
+			cxt.fillStyle = "blue";
+			cxt.fill();
+			cxt.beginPath();
+			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, true);
+			cxt.fill();
+			cxt.beginPath();
+			break;
+	}
+	drawTank(tank2);
+}
+
+function increment(){
+		var dir= ghost.direct;
+	var need_change=0;
+	switch(dir){
+	case 1:
+	if(ghost.x+30<canvas1.width&&((memory[ghost.x/20+1][ghost.y/20])==0)){
+	ghost.x+=20;
+	} //right
+	else need_change=1;
+	break;
+	case 2:
+	if(ghost.y+30<canvas1.height&&((memory[ghost.x/20][(ghost.y/20)+1])==0)){
+		  ghost.y+=20;
+		  } //down
+	else need_change=1;
+	break;
+	case 3:
+	if(ghost.x+10>ghost.speed&&((memory[(ghost.x/20)-1][ghost.y/20])==0)){
+		  ghost.x-=20;
+		  } //left
+	else need_change=1;
+	break;
+	case 0:
+	if(ghost.y+10>ghost.speed&&((memory[ghost.x/20][(ghost.y/20)-1])==0)){
+		  ghost.y-=20;
+		  } //up
+	else need_change=1;
+    break;
+    }
+    if(need_change==1){
+    	dir= Math.floor(Math.random()*4);
+	switch(dir){
+	case 1:
+	if(ghost.x+30<canvas1.width&&((memory[ghost.x/20+1][ghost.y/20])==0)){
+	ghost.x+=20;
+	ghost.direct=1;
+	} //right
+	break;
+	case 2:
+	if(ghost.y+30<canvas1.height&&((memory[ghost.x/20][(ghost.y/20)+1])==0)){
+		  ghost.y+=20;
+		  ghost.direct=2;
+		  } //down
+	break;
+	case 3:
+	if(ghost.x+10>ghost.speed&&((memory[(ghost.x/20)-1][ghost.y/20])==0)){
+		  ghost.x-=20;
+		  ghost.direct=3;
+		  } //left
+	break;
+	case 0:
+	if(ghost.y+10>ghost.speed&&((memory[ghost.x/20][(ghost.y/20)-1])==0)){
+		  ghost.y-=20;
+		  ghost.direct=0;
+		  } //up
+    break;
+    }
+    }
+    
+	drawGhost(ghost, hero);
+}

@@ -10,6 +10,7 @@
 <script type="text/javascript" src="tank.js"></script>
 <script type="text/javascript" src="jquery-1.3.2-vsdoc2.js"></script>
 <script type="text/javascript">
+
     var heroX=0;
 	var heroY=0;
 	//0: red; 1:blue; 2: green; 3:yellow
@@ -18,6 +19,7 @@
 	var cxt=canvas1.getContext("2d");
     
 	var hero=new Hero(0,0,1,20);
+	var ghost=new Ghost(0,20,1,20);
 	var memory= new Array(canvas1.width/20);
 	for(var j=0; j<canvas1.width/20; j++){
 	   memory[j]= new Array(k);
@@ -31,10 +33,15 @@
 		 var mouseX = event.pageX-offset.left;
          var mouseY = event.pageY-offset.top;
 	   drawOneWall(20*Math.floor(mouseX/20),20*Math.floor(mouseY/20),20,20);
-	}
+	}	
 );
+
+
+
+window.setInterval("increment()",400);
 	
-	drawTank(hero);
+	
+	
 	
 	function getCommand(){
 		cxt.clearRect(0,0,canvas1.width,canvas1.height);
@@ -81,7 +88,7 @@
 		  color=7;
 		  break;
 		  }
-		 drawTank(hero);
+		 drawGhost(ghost, hero);
 	}
 		
 </script>
