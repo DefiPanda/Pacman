@@ -19,7 +19,7 @@
 	var cxt=canvas1.getContext("2d");
     
 	var hero=new Hero(0,0,1,20);
-	var ghost=new Ghost(0,20,1,20);
+	var ghost=new Ghost(100,100,1,20, 2);
 	var memory= new Array(canvas1.width/20);
 	for(var j=0; j<canvas1.width/20; j++){
 	   memory[j]= new Array(k);
@@ -38,7 +38,7 @@
 
 
 
-window.setInterval("increment()",400);
+window.setInterval("increment(ghost)",400);
 	
 	
 	

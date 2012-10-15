@@ -125,20 +125,23 @@ function drawTank(tank) {
 	drawLines();
 }
 
-function Ghost(x, y, direct, speed) {
+//level 1: random ghost, level 2: if in sight, if possible, switch direction to get the pacman
+function Ghost(x, y, direct, speed, level) {
 	this.speed = speed;
 	this.x = x;
 	this.y = y;
 	this.direct = direct;
+	this.level= level;
 }
 
 function drawGhost(tank, tank2) {
+	var color= "blue";
 	cxt.clearRect(0,0,canvas1.width,canvas1.height);
 	switch(tank.direct) {
 		case 0:
 		    cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, true);
-			cxt.fillStyle = "blue";
+			cxt.fillStyle = color;
 			cxt.fill();
 			cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 1.25 * 3.14, 2.25 * 3.14, true);
@@ -148,7 +151,7 @@ function drawGhost(tank, tank2) {
 		case 2:
 		    cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, false);
-			cxt.fillStyle = "blue";
+			cxt.fillStyle = color;
 			cxt.fill();
 			cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 1.25 * 3.14, 2.25 * 3.14, false);
@@ -158,7 +161,7 @@ function drawGhost(tank, tank2) {
 		case 1:
 		    cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 0.25 * 3.14, 1.25 * 3.14, false);
-			cxt.fillStyle = "blue";
+			cxt.fillStyle = color;
 			cxt.fill();
 			cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, false);
@@ -168,7 +171,7 @@ function drawGhost(tank, tank2) {
 		case 3:
 			cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 0.25 * 3.14, 1.25 * 3.14, true);
-			cxt.fillStyle = "blue";
+			cxt.fillStyle = color;
 			cxt.fill();
 			cxt.beginPath();
 			cxt.arc(tank.x+10, tank.y+10, 10, 0.75 * 3.14, 1.75 * 3.14, true);
@@ -179,8 +182,42 @@ function drawGhost(tank, tank2) {
 	drawTank(tank2);
 }
 
-function increment(){
-		var dir= ghost.direct;
+function increment(ghost){
+	var dir= ghost.direct;
+	var dice= Math.floor(Math.random()*2);
+	//if distance bewteen ghost and pacman is within 5 grids
+	if(ghost.level==2&&((ghost.x-hero.x)*(ghost.x-hero.x)+(ghost.y-hero.y)*(ghost.y-hero.y))<=25*20*20){
+		if(ghost.x>hero.x){
+			if(ghost.y>hero.y) {
+				if(dice==0){dir=0; ghost.direct=0;}
+				else {dir=3; ghost.direct=3;}
+				}
+			else if(ghost.y<hero.y){
+				if(dice==0){dir=2; ghost.direct=2;}
+				else {dir=3; ghost.direct=3;}
+				}
+			else{
+				dir=3; ghost.direct=3; 
+			}
+		}
+		else if(ghost.x<hero.x){
+			if(ghost.y<hero.y) {
+				if(dice==0){dir=2; ghost.direct=2;}
+				else {dir=1; ghost.direct=1;}
+				}
+			else if(ghost.y>hero.y){
+				if(dice==0){dir=0; ghost.direct=0;}
+				else {dir=1; ghost.direct=1;}
+			}
+			else{
+			   dir=1; ghost.direct=1;
+			}
+		}
+		else if(ghost.x==hero.x){
+			if(ghost.y>hero.y) {dir=0; ghost.direct=0;}
+			else {dir=2; ghost.direct=2;}
+		}
+	}
 	var need_change=0;
 	switch(dir){
 	case 1:
@@ -238,5 +275,6 @@ function increment(){
     }
     }
     
-	drawGhost(ghost, hero);
+    if(ghost.x==hero.x&&ghost.y==hero.y){window.alert("game over!"); }
+	drawGhost(ghost, hero);	
 }
