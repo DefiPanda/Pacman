@@ -17,7 +17,8 @@
 	var color=0;
 	var canvas1=document.getElementById("tankMap");
 	var cxt=canvas1.getContext("2d");
-    
+    //hunting range
+    var range= 5;
 	var hero=new Hero(0,0,1,20);
 	var ghost=new Ghost(100,100,1,20, 2);
 	var memory= new Array(canvas1.width/20);
@@ -87,6 +88,10 @@ window.setInterval("increment(ghost)",400);
 		 case 55:
 		  color=7;
 		  break;
+		 case 27:
+		  range=prompt("Please enter the range:","default is 5");
+		  window.alert("The range has been updated to "+range+" !");
+		  break;
 		  }
 		 drawGhost(ghost, hero);
 	}
@@ -94,6 +99,7 @@ window.setInterval("increment(ghost)",400);
 </script>
 
 <p>To change wall color, please press 0,1,..7.</p>
+hit "ESC" button to set the hunter range K= (if the ghost's distance is within K blocks of that is Pacman, he will hunt Pacman.)
 </body>
 </html>
 

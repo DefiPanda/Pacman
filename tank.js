@@ -186,7 +186,7 @@ function increment(ghost){
 	var dir= ghost.direct;
 	var dice= Math.floor(Math.random()*2);
 	//if distance bewteen ghost and pacman is within 5 grids
-	if(ghost.level==2&&((ghost.x-hero.x)*(ghost.x-hero.x)+(ghost.y-hero.y)*(ghost.y-hero.y))<=25*20*20){
+	if(ghost.level==2&&((ghost.x-hero.x)*(ghost.x-hero.x)+(ghost.y-hero.y)*(ghost.y-hero.y))<=range*range*20*20){
 		if(ghost.x>hero.x){
 			if(ghost.y>hero.y) {
 				if(dice==0){dir=0; ghost.direct=0;}
