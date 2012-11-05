@@ -4,6 +4,7 @@ user can change the color of the wall (by hitting 0-7);
 generate lower-level version ghosts that will move in one direction and once hits wall, will change direction. else, change direction with random chance (user can set);
 generate higher-level version of ghosts that will trace will pacman is and move to hunt pacman with some algorithm (and user can set what algorithm he wants);
 echo "game over" when ghost catches pacman
+user can store and load maps along with color/wall memorization
 
 To-do:
 implement power peels, user can put power peels on map;
