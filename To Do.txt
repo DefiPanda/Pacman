@@ -7,7 +7,7 @@ echo "game over" when ghost catches pacman
 user can store and load maps along with color/wall memorization
 
 To-do:
-implement power peels, user can put power peels on map;
+implement something(maybe letters) that is running away from Pacman;
 whenever pacman eat power peels, all ghost can only move in one direction and only change direction when it hits wall ;
 set up several different criteria to determine what is a game win, and the user can set it. 
 
