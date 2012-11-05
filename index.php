@@ -42,8 +42,6 @@
 window.setInterval("increment(ghost)",400);
 	
 	
-	
-	
 	function getCommand(){
 		cxt.clearRect(0,0,canvas1.width,canvas1.height);
 		var code=event.keyCode;
@@ -88,6 +86,38 @@ window.setInterval("increment(ghost)",400);
 		 case 55:
 		  color=7;
 		  break;
+		 case 79:
+		  window.webkitRequestFileSystem(window.TEMPORARY, 1024*1024, function(fs) {
+        fs.root.getFile('map.bin', {create: true}, function(fileEntry) {
+            fileEntry.createWriter(function(fileWriter) {
+            	var w= canvas1.width/20;
+            	var h= canvas1.height/20;
+                var arr = new Uint8Array(w*h+1);
+                var counter= 0;
+                for(var j=0; j<w; j++){
+	             for(var k=0; k<h; k++){
+	             //right column by row, i.e. x by y
+	 	         arr[counter]= (memory[j][k]+48);
+	 	         counter++;
+	 }
+	}
+           	    //last digit of map is the color
+	            arr[counter]= (color+48);
+                var blob = new Blob([arr]);
+    
+                fileWriter.addEventListener("writeend", function() {
+                    // navigate to file, will download
+                    location.href = fileEntry.toURL();
+                }, false);
+    
+                fileWriter.write(blob);
+            }, function() {});
+        }, function() {});
+    }, function() {});
+		 break;
+		// case 80:
+		
+		// break;
 		 case 27:
 		  range=prompt("Please enter the range:","default is 5");
 		  window.alert("The range has been updated to "+range+" !");
@@ -98,8 +128,39 @@ window.setInterval("increment(ghost)",400);
 		
 </script>
 
-<p>To change wall color, please press 0,1,..7.</p>
-hit "ESC" button to set the hunter range K= (if the ghost's distance is within K blocks of that is Pacman, he will hunt Pacman.)
+<p><strong>Set</strong> the hunter range K= (if the ghost's distance is within K blocks of that is Pacman, he will hunt Pacman.) by hitting "ESC" button<br>
+<strong>Color</strong> wall differently by pressing 0,1,..7.<br>
+<strong>Save</strong> current map by hitting "o". <strong>Upload</strong> map here: <input type="file" id="fileinput"/> </p>
+<script type="text/javascript">
+   function readSingleFile(evt) {
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0]; 
+
+    if (f) {
+      var r = new FileReader();
+      r.onload = function(e) { 
+	      var contents = e.target.result;
+	      var w= canvas1.width/20;
+          var h= canvas1.height/20;
+          var counter= 0;
+                for(var j=0; j<w; j++){
+                 for(var k=0; k<h; k++){
+                 //right column by row, i.e. x by y
+                 var character= contents.charAt(counter);
+                 counter++;
+                  memory[j][k]= parseInt(character);
+     }
+    }
+         color= parseInt(contents.charAt(counter));
+      }
+      r.readAsText(f);
+    } else { 
+      alert("Failed to load file");
+    }
+  }
+
+  document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+</script>
 </body>
 </html>
 
