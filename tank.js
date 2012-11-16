@@ -134,9 +134,12 @@ function Ghost(x, y, direct, speed, level) {
 	this.level= level;
 }
 
-function drawGhost(tank, tank2) {
-	var color= "blue";
+function drawGhost(list, tank2) {
 	cxt.clearRect(0,0,canvas1.width,canvas1.height);
+	for(var i=0; i<list.length; i++){
+	var tank= list[i];
+	var color= "blue";
+	if(tank.level==2){color="green";}
 	switch(tank.direct) {
 		case 0:
 		    cxt.beginPath();
@@ -179,10 +182,13 @@ function drawGhost(tank, tank2) {
 			cxt.beginPath();
 			break;
 	}
+	}
 	drawTank(tank2);
 }
 
-function increment(ghost){
+function increment(list){
+	for(var i=0; i<list.length; i++){
+	ghost=list[i];
 	var dir= ghost.direct;
 	var dice= Math.floor(Math.random()*2);
 	//if distance bewteen ghost and pacman is within 5 grids
@@ -276,5 +282,6 @@ function increment(ghost){
     }
     
     if(ghost.x==hero.x&&ghost.y==hero.y){window.alert("game over!"); }
-	drawGhost(ghost, hero);	
+   }
+	drawGhost(list, hero);	
 }
