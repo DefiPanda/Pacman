@@ -40,7 +40,6 @@ function drawLines(){
 	cxt.endPath();
 }
 
-
 function drawWalls(){
 	for(var j=0; j<canvas1.width/20; j++){
 		for(var k=0; k<canvas1.height/20; k++){
@@ -134,12 +133,34 @@ function Ghost(x, y, direct, speed, level) {
 	this.level= level;
 }
 
-function drawGhost(list, tank2) {
+function Runnaway(x, y, direct, speed, level, eaten) {
+	this.speed = speed;
+	this.x = x;
+	this.y = y;
+	this.direct = direct;
+	this.level= level;
+	this.eaten= eaten;
+}
+
+function drawGhost(list1, list2, tank2) {
 	cxt.clearRect(0,0,canvas1.width,canvas1.height);
+	var list= new Array();
+	for(var i=0; i<list1.length; i++){
+		list[i]= list1[i];
+	}
+	var to_draw=0;
+	for(var i=0; i<list2.length; i++){
+		if(list2[i].eaten==1){
+		list[list1.length+i-to_draw]= list2[i];}
+		else{
+			to_draw++;
+		}
+	}
 	for(var i=0; i<list.length; i++){
 	var tank= list[i];
 	var color= "blue";
 	if(tank.level==2){color="green";}
+	else if(tank.level==3) {color="white";}
 	switch(tank.direct) {
 		case 0:
 		    cxt.beginPath();
@@ -283,5 +304,45 @@ function increment(list){
     
     if(ghost.x==hero.x&&ghost.y==hero.y){window.alert("game over!"); }
    }
-	drawGhost(list, hero);	
+   
+   
+    for(var i=0; i<runnaway_list.length; i++){
+    	if(runnaway_list[i].eaten==0) continue;
+     	var dir= Math.floor(Math.random()*4);
+     	var ghost= runnaway_list[i];
+    	
+     	
+	switch(dir){
+	case 1:
+	if(ghost.x+30<canvas1.width&&((memory[ghost.x/20+1][ghost.y/20])==0)){
+	if(ghost.x+20==hero.x&&ghost.y==hero.y){ghost.eaten=0;winning--;}
+	ghost.x+=20;
+	ghost.direct=1;
+	} //right
+	break;
+	case 2:
+	if(ghost.y+30<canvas1.height&&((memory[ghost.x/20][(ghost.y/20)+1])==0)){
+		if(ghost.x==hero.x&&ghost.y+20==hero.y){ghost.eaten=0;winning--;}
+		  ghost.y+=20;
+		  ghost.direct=2;
+		  } //down
+	break;
+	case 3:
+	if(ghost.x+10>ghost.speed&&((memory[(ghost.x/20)-1][ghost.y/20])==0)){
+		if(ghost.x-20==hero.x&&ghost.y==hero.y){ghost.eaten=0;winning--;}
+		  ghost.x-=20;
+		  ghost.direct=3;
+		  } //left
+	break;
+	case 0:
+	if(ghost.y+10>ghost.speed&&((memory[ghost.x/20][(ghost.y/20)-1])==0)){
+		if(ghost.x==hero.x&&ghost.y-20==hero.y){ghost.eaten=0;winning--;}
+		  ghost.y-=20;
+		  ghost.direct=0;
+		  } //up
+    break;
+    }
+    }
+    
+	drawGhost(list, runnaway_list, hero);	
 }

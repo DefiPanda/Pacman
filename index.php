@@ -10,7 +10,7 @@
 <script type="text/javascript" src="tank.js"></script>
 <script type="text/javascript" src="jquery-1.3.2-vsdoc2.js"></script>
 <script type="text/javascript">
-
+    
     var heroX=0;
 	var heroY=0;
 	//0: red; 1:blue; 2: green; 3:yellow
@@ -26,6 +26,16 @@
 	ghost_list[2]= new Ghost(300,300,3,20, 2);
 	ghost_list[3]= new Ghost(300,200,1,20, 2);
 	// var ghost=new Ghost(100,100,1,20, 2);
+    var runnaway_list= new Array(8);
+    var winning= runnaway_list.length;
+    runnaway_list[0]= new Runnaway(200,100,1,20,3,1);
+    runnaway_list[1]= new Runnaway(200,300,1,20,3,1);
+    runnaway_list[2]= new Runnaway(200,100,1,20,3,1);
+    runnaway_list[3]= new Runnaway(200,300,1,20,3,1);
+    runnaway_list[4]= new Runnaway(300,100,1,20,3,1);
+    runnaway_list[5]= new Runnaway(300,200,1,20,3,1);
+    runnaway_list[6]= new Runnaway(300,100,1,20,3,1);
+    runnaway_list[7]= new Runnaway(300,200,1,20,3,1);
 	var memory= new Array(canvas1.width/20);
 	for(var j=0; j<canvas1.width/20; j++){
 	   memory[j]= new Array(k);
@@ -55,6 +65,12 @@ window.setInterval("increment(ghost_list)",400);
 			for(var i=0; i<ghost_list.length; i++){
 			if(ghost_list[i].x==hero.x && ghost_list[i].y==hero.y-20) {alert("game over!"); break;}
 		}
+		for(var i=0; i<runnaway_list.length; i++){
+			if(runnaway_list[i].eaten==1&&runnaway_list[i].x==hero.x && runnaway_list[i].y==hero.y-20) {runnaway_list[i].eaten=0;winning--;
+				
+				if(winning==0) alert("you win!");
+				break;}
+		}
 		  if(hero.y+10>hero.speed&&((memory[hero.x/20][(hero.y/20)-1])==0)){
 		  hero.moveUp();}
 		  break;
@@ -62,6 +78,12 @@ window.setInterval("increment(ghost_list)",400);
 		 for(var i=0; i<ghost_list.length; i++){
 			if(ghost_list[i].x==hero.x+20 && ghost_list[i].y==hero.y) {alert("game over!"); break;}
 		}
+		for(var i=0; i<runnaway_list.length; i++){
+			if(runnaway_list[i].eaten==1&&runnaway_list[i].x==hero.x+20 && runnaway_list[i].y==hero.y) {runnaway_list[i].eaten=0;winning--;
+				
+				if(winning==0) alert("you win!");
+				break;}
+		}
 		  if(hero.x+30<canvas1.width&&((memory[hero.x/20+1][hero.y/20])==0)){
 		  hero.moveRight();}
 		  break;
@@ -69,6 +91,12 @@ window.setInterval("increment(ghost_list)",400);
 		 for(var i=0; i<ghost_list.length; i++){
 			if(ghost_list[i].x==hero.x && ghost_list[i].y==hero.y+20) {alert("game over!"); break;}
 		}
+		for(var i=0; i<runnaway_list.length; i++){
+			if(runnaway_list[i].eaten==1&&runnaway_list[i].x==hero.x && runnaway_list[i].y==hero.y+20) {runnaway_list[i].eaten=0;winning--;
+				
+				if(winning==0) alert("you win!");
+				break;}
+		}
 		  if(hero.y+30<canvas1.height&&((memory[hero.x/20][(hero.y/20)+1])==0)){
 		  hero.moveDown();}
 		  break;
@@ -76,6 +104,12 @@ window.setInterval("increment(ghost_list)",400);
 		 for(var i=0; i<ghost_list.length; i++){
 			if(ghost_list[i].x==hero.x-20 && ghost_list[i].y==hero.y) {alert("game over!"); break;}
 		}
+		for(var i=0; i<runnaway_list.length; i++){
+			if(runnaway_list[i].eaten==1&&runnaway_list[i].x==hero.x-20 && runnaway_list[i].y==hero.y) {runnaway_list[i].eaten=0; winning--;
+				
+				if(winning==0) alert("you win!");
+				break;}
+		}
 		  if(hero.x+10>hero.speed&&((memory[(hero.x/20)-1][hero.y/20])==0)){
 		  hero.moveLeft();}
 		  break;
@@ -140,7 +174,7 @@ window.setInterval("increment(ghost_list)",400);
 		  window.alert("The range has been updated to "+range+" !");
 		  break;
 		  }
-		 drawGhost(ghost_list, hero);
+		 drawGhost(ghost_list, runnaway_list, hero);
 	}
 		
 </script>
