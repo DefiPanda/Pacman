@@ -144,20 +144,8 @@ function Runnaway(x, y, direct, speed, level, eaten) {
 
 function drawGhost(list1, list2, tank2) {
 	cxt.clearRect(0,0,canvas1.width,canvas1.height);
-	var list= new Array();
 	for(var i=0; i<list1.length; i++){
-		list[i]= list1[i];
-	}
-	var to_draw=0;
-	for(var i=0; i<list2.length; i++){
-		if(list2[i].eaten==1){
-		list[list1.length+i-to_draw]= list2[i];}
-		else{
-			to_draw++;
-		}
-	}
-	for(var i=0; i<list.length; i++){
-	var tank= list[i];
+	var tank= list1[i];
 	var color= "blue";
 	if(tank.level==2){color="green";}
 	else if(tank.level==3) {color="white";}
@@ -204,8 +192,61 @@ function drawGhost(list1, list2, tank2) {
 			break;
 	}
 	}
+	for(var j=0; j<list2.length; j++){
+		var tank= list2[j];
+      if(tank.eaten==1){
+      drawBodyIn(tank.x+10,tank.y+10,0);
+      drawEyesIn(tank.x+20,tank.y+25,0);
+      }
+    
+  }
 	drawTank(tank2);
 }
+
+function drawBodyIn(x,y,alpha){
+      cxt.beginPath();
+      x-=5; y-=6;
+      cxt.moveTo(x,y);
+      cxt.lineTo(x,y+4);
+      cxt.arc(x+4,y+4,4,Math.PI,Math.PI*2,false);
+      cxt.lineTo(x+8,y+12);
+      cxt.lineTo(x+6,y+10);
+      cxt.lineTo(x+5,y+12);
+      cxt.lineTo(x+4,y+10);
+      cxt.lineTo(x+3,y+12);
+      cxt.lineTo(x+2,y+10);
+      cxt.lineTo(x,y+12);
+      cxt.closePath();
+
+      cxt.lineWidth = 3;
+      cxt.fillStyle = "rgba(175,255,255,"+alpha+")";
+      cxt.stroke();
+      cxt.fill();
+    }
+
+    function drawEyesIn(x,y,alpha) {
+    	x-=14; y-=18;
+      cxt.beginPath();
+      cxt.arc(x,y,1,0,Math.PI*2,false);
+      cxt.moveTo(x+5,y);
+      cxt.arc(x+4,y,1,0,Math.PI*2,false);
+      cxt.closePath();
+
+      cxt.lineWidth = 1;
+      cxt.fillStyle = "rgb(255,255,255)";
+      cxt.stroke();
+      cxt.fill();
+
+      cxt.beginPath();
+      cxt.arc(x+1,y+0,1,0,Math.PI*2,false);
+      cxt.moveTo(x+5,y+0);
+      cxt.arc(x+5,y+0,3,0,Math.PI*2,false);
+      cxt.closePath();
+
+      cxt.fillStyle = "rgba(0,0,0,"+alpha+")";
+      cxt.stroke();
+      cxt.fill();
+    }
 
 function increment(list){
 	for(var i=0; i<list.length; i++){

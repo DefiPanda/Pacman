@@ -5,10 +5,10 @@ generate lower-level version ghosts that will move in one direction and once hit
 generate higher-level version of ghosts that will trace will pacman is and move to hunt pacman with some algorithm (and user can set what algorithm he wants);
 echo "game over" when ghost catches pacman
 user can store and load maps along with color/wall memorization
-
-To-do:
 implement something(maybe letters) that is running away from Pacman;
-whenever pacman eat power peels, all ghost can only move in one direction and only change direction when it hits wall ;
 set up several different criteria to determine what is a game win, and the user can set it. 
 
-
+To-do:
+scoring system;
+better map;
+make Pacman run slower

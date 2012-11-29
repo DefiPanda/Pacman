@@ -28,7 +28,7 @@
 	// var ghost=new Ghost(100,100,1,20, 2);
     var runnaway_list= new Array(8);
     var winning= runnaway_list.length;
-    runnaway_list[0]= new Runnaway(200,100,1,20,3,1);
+    runnaway_list[0]= new Runnaway(200,100,1,20,3,0);
     runnaway_list[1]= new Runnaway(200,300,1,20,3,1);
     runnaway_list[2]= new Runnaway(200,100,1,20,3,1);
     runnaway_list[3]= new Runnaway(200,300,1,20,3,1);
@@ -175,6 +175,7 @@ window.setInterval("increment(ghost_list)",400);
 		  break;
 		  }
 		 drawGhost(ghost_list, runnaway_list, hero);
+		
 	}
 		
 </script>
