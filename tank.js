@@ -249,6 +249,7 @@ function drawBodyIn(x,y,alpha){
     }
 
 function increment(list){
+	in_interval=0;
 	for(var i=0; i<list.length; i++){
 	ghost=list[i];
 	var dir= ghost.direct;
