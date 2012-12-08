@@ -1,3 +1,110 @@
+function init(){
+	if(level>=3||winning>0){
+	if(winning<=0){
+	alert("you win!");
+	}
+	else{
+	alert("you lose!");	
+	}
+	level=0;
+	in_interval=0;
+    heroX=0;
+	heroY=0;
+	//0: red; 1:blue; 2: green; 3:yellow
+	color=0;
+	canvas1=document.getElementById("tankMap");
+	cxt=canvas1.getContext("2d");
+    //hunting range
+    range= range_1;
+	hero=new Hero(0,0,1,20);
+	ghost_list= new Array(size_1);
+	for(var i=0; i<random_1; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		ghost_list[i]= new Ghost(100*w_rnd, 100*h_rnd, i%4, 20, 1);
+	}
+	for(var i=random_1; i<size_1; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		ghost_list[i]= new Ghost(100*w_rnd, 100*h_rnd, i%4, 20, 2);
+	}
+
+   winning= winning_1;
+   runnaway_list= new Array(winning);
+    for(var i=0; i<winning; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		runnaway_list[i]= new Runnaway(100*w_rnd, 100*h_rnd, 1,20,3,1);
+	}
+
+	memory= new Array(canvas1.width/20);
+	for(var j=0; j<canvas1.width/20; j++){
+	   memory[j]= new Array(k);
+	 for(var k=0; k<canvas1.height/20; k++){
+	 	memory[j][k]=0;
+	 }
+	}
+ }
+ else {
+ 	level++;
+ 	if(level==3) init();
+ 	alert("now you are at level "+level);
+ 	in_interval=0;
+    heroX=0;
+	heroY=0;
+	canvas1=document.getElementById("tankMap");
+	cxt=canvas1.getContext("2d");
+    //hunting range
+    if(level==1){
+    range= range_2;}
+    else range= range_3;
+	hero=new Hero(0,0,1,20);
+	if(level==1){
+	ghost_list= new Array(size_2);
+	for(var i=0; i<random_2; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		ghost_list[i]= new Ghost(100*w_rnd, 100*h_rnd, i%4, 20, 1);
+	}
+	for(var i=random_2; i<size_2; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		ghost_list[i]= new Ghost(100*w_rnd, 100*h_rnd, i%4, 20, 2);
+	}
+	
+	  winning= winning_2;
+   runnaway_list= new Array(winning);
+    for(var i=0; i<winning; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		runnaway_list[i]= new Runnaway(100*w_rnd, 100*h_rnd, 1,20,3,1);
+	}
+	
+   }
+   else if(level==2){
+   ghost_list= new Array(size_3);
+	for(var i=0; i<random_3; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		ghost_list[i]= new Ghost(100*w_rnd, 100*h_rnd, i%4, 20, 1);
+	}
+	for(var i=random_3; i<size_3; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		ghost_list[i]= new Ghost(100*w_rnd, 100*h_rnd, i%4, 20, 2);
+	}
+	  winning= winning_3;
+   runnaway_list= new Array(winning);
+    for(var i=0; i<winning; i++){
+		var w_rnd= Math.floor(Math.random()*4)+1;
+		var h_rnd= Math.floor(Math.random()*3)+1;
+		runnaway_list[i]= new Runnaway(100*w_rnd, 100*h_rnd, 1,20,3,1);
+	}
+   }
+ }
+}
+
+
 function Hero(x, y, direct, speed) {
 	this.speed = speed;
 	this.x = x;
@@ -24,20 +131,21 @@ function Hero(x, y, direct, speed) {
 
 
 function drawLines(){
-	cxt.beginPath();
-    for(var i=1; i<= canvas1.height/20; i++){
-	cxt.moveTo(0,20*i);
-	cxt.lineTo(canvas1.width,20*i);
 	cxt.strokeStyle="red";
-	cxt.stroke();
-	}
-	for(i=1; i<= canvas1.width/20; i++){
-	cxt.moveTo(20*i,0);
-	cxt.lineTo(20*i,canvas1.height);
-	cxt.strokeStyle="red";
-	cxt.stroke();
-	}
-	cxt.endPath();
+	// cxt.beginPath();
+    // for(var i=1; i<= canvas1.height/20; i++){
+	// cxt.moveTo(0,20*i);
+	// cxt.lineTo(canvas1.width,20*i);
+	// cxt.strokeStyle="red";
+	// cxt.stroke();
+	// }
+	// for(i=1; i<= canvas1.width/20; i++){
+	// cxt.moveTo(20*i,0);
+	// cxt.lineTo(20*i,canvas1.height);
+	// cxt.strokeStyle="red";
+	// cxt.stroke();
+	// }
+	// cxt.endPath();
 }
 
 function drawWalls(){
@@ -141,6 +249,37 @@ function Runnaway(x, y, direct, speed, level, eaten) {
 	this.level= level;
 	this.eaten= eaten;
 }
+
+
+  
+  function readSingleFile(evt) {
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0]; 
+
+    if (f) {
+      var r = new FileReader();
+      r.onload = function(e) { 
+	      var contents = e.target.result;
+	      var w= canvas1.width/20;
+          var h= canvas1.height/20;
+          var counter= 0;
+                for(var j=0; j<w; j++){
+                 for(var k=0; k<h; k++){
+                 //right column by row, i.e. x by y
+                 var character= contents.charAt(counter);
+                 counter++;
+                  memory[j][k]= parseInt(character);
+     }
+    }
+         color= parseInt(contents.charAt(counter));
+      }
+      r.readAsText(f);
+    } else { 
+      alert("Failed to load file");
+    }
+  }  	
+
+
 
 function drawGhost(list1, list2, tank2) {
 	cxt.clearRect(0,0,canvas1.width,canvas1.height);
@@ -249,6 +388,7 @@ function drawBodyIn(x,y,alpha){
     }
 
 function increment(list){
+	if(winning==0) init();
 	in_interval=0;
 	for(var i=0; i<list.length; i++){
 	ghost=list[i];
@@ -344,7 +484,9 @@ function increment(list){
     }
     }
     
-    if(ghost.x==hero.x&&ghost.y==hero.y){window.alert("game over!"); }
+    if(ghost.x==hero.x&&ghost.y==hero.y){
+    init();
+    }
    }
    
    
